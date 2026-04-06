@@ -92,12 +92,24 @@ function Sparkline({ data, color }) {
   );
 }
 
-function CoinCard({ coin, rank }) {
+function CoinCard({ coin, rank, isFavorite, toggleFavorite }) {
   const navigate = useNavigate();
   if (!coin) return null;
 
   const isPositive = coin.price_change_percentage_24h >= 0;
   const color = isPositive ? '#4caf50' : '#f44336';
+
+  const handleFavClick = (e) => {
+    e.stopPropagation(); 
+    toggleFavorite(coin.id);
+  };
+
+  // Functie om prijzen netjes te tonen, ook voor zeer kleine bedragen
+  const formatPrice = (price) => {
+    if (price >= 1) return price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (price >= 0.01) return price.toLocaleString(undefined, { minimumFractionDigits: 4, maximumFractionDigits: 4 });
+    return price.toLocaleString(undefined, { minimumFractionDigits: 6, maximumFractionDigits: 8 });
+  };
 
   return (
     <div 
@@ -105,32 +117,49 @@ function CoinCard({ coin, rank }) {
       style={{
         cursor: 'pointer', 
         display: 'grid',
-        gridTemplateColumns: '50px 1.5fr 1fr 1fr 1.5fr',
+        gridTemplateColumns: '50px 1.5fr 1fr 1fr 1.5fr 50px',
         alignItems: 'center', 
         padding: '12px 20px',
         borderBottom: '1px solid #333',
-        background: '#1a1a1a'
+        background: '#1a1a1a',
+        gap: '10px'
       }}
     >
       <span className="normaaltekst" style={{ opacity: 0.5 }}>{rank}</span>
       
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <img src={coin.image} alt="" style={{ width: '24px', height: '24px' }} />
-        <span className="koptekst" style={{ fontSize: '1rem', fontWeight: 'bold' }}>
-          {coin.name} <span style={{ opacity: 0.5, fontWeight: 'normal', fontSize: '0.8rem' }}>{coin.symbol.toUpperCase()}</span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
+        <img src={coin.image} alt="" style={{ width: '24px', height: '24px', flexShrink: 0 }} />
+        <span className="koptekst" style={{ fontSize: '0.9rem', fontWeight: 'bold', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          {coin.name} <span style={{ opacity: 0.5, fontWeight: 'normal', fontSize: '0.75rem' }}>{coin.symbol.toUpperCase()}</span>
         </span>
       </div>
 
-      <div className="normaaltekst" style={{ fontWeight: 'bold' }}>
-        ${coin.current_price.toLocaleString()}
+      <div className="normaaltekst" style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
+        ${formatPrice(coin.current_price)}
       </div>
 
-      <div className="normaaltekst" style={{ color }}>
+      <div className="normaaltekst" style={{ color, fontSize: '0.9rem' }}>
         {isPositive ? '+' : ''}{coin.price_change_percentage_24h?.toFixed(2)}%
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Sparkline data={coin.sparkline_in_7d?.price} color={color} />
+      </div>
+
+      <div style={{ textAlign: 'center' }}>
+        <button 
+          onClick={handleFavClick}
+          style={{ 
+            background: 'none', 
+            border: 'none', 
+            cursor: 'pointer', 
+            fontSize: '1.2rem',
+            color: isFavorite ? '#ffd700' : '#444',
+            padding: '5px'
+          }}
+        >
+          {isFavorite ? '★' : '☆'}
+        </button>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ function MarketFactors() {
   ];
 
   return (
-    <div className="outerliststyling flex" style={{flexDirection: 'column', width: '350px', padding: '20px', gap: '15px'}}>
+    <div className="outerliststyling flex" style={{flexDirection: 'column', padding: '20px', gap: '15px', width: '100%', boxSizing: 'border-box'}}>
       <h1 className="ranktekst center" style={{marginBottom: '10px'}}>Market Impact Factors</h1>
       {factors.map((factor, index) => (
         <div key={index} style={{borderBottom: '1px solid #444', paddingBottom: '10px'}}>
