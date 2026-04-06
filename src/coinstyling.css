@@ -1,0 +1,63 @@
+.outercoinstyling {
+    border-radius: 12px;
+    background-color: #2d2d2d;
+    flex-direction: row;
+    padding: 10px;
+    border-color: rgb(131, 122, 255);
+    border-width: 2px;
+    border-style: solid;
+    align-items: center;
+    gap: 30px;
+    justify-content: center;
+    width: fit-content;
+}
+
+.outerliststyling {
+    border-radius: 12px;
+    background-color: #2d2d2d;
+    flex-direction: row;
+    padding: 10px;
+    border-color: rgb(131, 122, 255);
+    border-width: 2px;
+    border-style: solid;
+    align-items: center;
+    gap: 30px;
+    justify-content: center;
+}
+
+.center {
+    justify-content: center;
+}
+
+.koptekst {
+    font-family: 'Geist Sans', sans-serif;
+    color: white;
+    font-weight: 300;
+}
+
+.ranktekst {
+    font-family: 'Geist Sans', sans-serif;
+    color: white;
+    font-weight: 600;
+}
+
+.normaaltekst {
+    font-family: 'Inter';
+    font-weight: 500;
+    color: white;
+}
+
+.coinimg {
+    padding: 0px;
+    margin: 0px;
+}
+
+.coinimages{
+    width: 60px;
+    border-radius: 40px;
+}
+
+.coininfo {
+    flex-direction: row;
+    gap: 30px;
+}

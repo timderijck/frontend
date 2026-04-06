@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+code, pre {
+  font-family: 'Geist Mono', monospace;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+.flex {
+    display: flex;
+}
+
+.defaultbackground {
+    background-image: linear-gradient(to left, rgb(131, 122, 255), rgb(0, 0, 0));
+}
+
+.coinlist {
+    padding: 12px;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.logo {
+    height: 65px;
+}
+
+.headerlayout {
+    padding: 12px;
+}
+
+.headerinfo {
+    font-family: 'Geist Sans', sans-serif;
+    color: white;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
