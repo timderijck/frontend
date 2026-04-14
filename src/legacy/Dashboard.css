@@ -1,0 +1,99 @@
+.dashboard-container {
+  padding: 40px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  flex: 1;
+}
+
+.dashboard-header {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.market-assets-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #222;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+}
+
+.top-products-info {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.assets-table {
+  background: #1a1a1a;
+  border: 2px solid #333;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 50px 1.5fr 1fr 1fr 1.5fr 50px;
+  padding: 15px 20px; 
+  background: #252525;
+  border-bottom: 2px solid #333;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.favorites-separator {
+  border-bottom: 2px solid #837aff;
+}
+
+.loading-container {
+  padding: 40px;
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.quick-stats-card {
+  padding: 30px;
+  background: #1a1a1a;
+  border: 2px solid #333;
+}
+
+.quick-stats-title {
+  margin-bottom: 20px;
+}
+
+.quick-stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 0.9rem;
+}
+
+.accent-text {
+  color: #837aff;
+}
+
+.update-info {
+  margin-top: 10px;
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
