@@ -18,6 +18,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   // Hier houden we bij of we de lijst handig aan het verversen zijn
   const [refreshing, setRefreshing] = useState(false);
+  // Hier houden we bij of er een fout is opgetreden bij het laden
+  const [error, setError] = useState(null);
   
   // Hier laden we de opgeslagen favorieten uit het geheugen van je browser (localStorage).
   // Zo blijven je sterretjes staan als je de pagina ververst.
@@ -30,6 +32,7 @@ const Dashboard = () => {
   const fetchCoins = useCallback(async (isManual = false) => {
     if (isManual) setRefreshing(true); // Laat zien dat we aan het verversen zijn
     else setLoading(true); // Laat het laadscherm zien bij de eerste keer
+    setError(null); // We beginnen met een schone lei (geen foutmeldingen)
 
     const apiKey = import.meta.env.VITE_COINGECKO_API_KEY;
     try {
@@ -37,11 +40,27 @@ const Dashboard = () => {
       const res = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=24h&t=${Date.now()}`, {
         headers: { 'x-cg-demo-api-key': apiKey }
       });
+
+      // Als de server boos is (bijvoorbeeld als we te vaak hebben gevraagd)
+      if (!res.ok) {
+        if (res.status === 429) {
+          throw new Error("Wacht even... we hebben te vaak gegevens gevraagd van de server (limiet bereikt). Probeer het over een minuutje weer!");
+        }
+        throw new Error("Er ging iets mis bij het ophalen van de gegevens van de server.");
+      }
+
       const data = await res.json();
+      
       // We checken of we echt een lijst hebben gekregen en slaan die op
-      setCoins(Array.isArray(data) ? data : []);
+      if (Array.isArray(data)) {
+        setCoins(data);
+      } else {
+        throw new Error("De server stuurde gegevens terug die we niet begrijpen.");
+      }
     } catch (error) {
       console.error("Er ging iets mis bij het ophalen van de munten:", error);
+      setError(error.message); // Sla de foutmelding op om aan de gebruiker te laten zien
+      setCoins([]); // Maak de lijst leeg als het niet gelukt is
     } finally {
       // We zijn klaar met laden, dus de laadschermen mogen weg
       setLoading(false);
@@ -105,6 +124,7 @@ const Dashboard = () => {
           search={search} 
           favorites={favorites} 
           toggleFavorite={toggleFavorite} 
+          error={error}
         />
 
         {/* De extra blokjes onder de tabel met statistieken en uitleg */}

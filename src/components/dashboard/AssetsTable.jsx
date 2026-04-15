@@ -2,7 +2,7 @@ import React from 'react';
 import CoinCard from './CoinCard';
 
 // De AssetsTable laat een lijst zien van alle cryptomunten.
-const AssetsTable = ({ coins, loading, search, favorites, toggleFavorite }) => {
+const AssetsTable = ({ coins, loading, search, favorites, toggleFavorite, error }) => {
   // Hier filteren we de munten op basis van wat je in de zoekbalk typt
   const filteredCoins = coins.filter(coin => 
     coin.name.toLowerCase().includes(search.toLowerCase()) || 
@@ -29,6 +29,11 @@ const AssetsTable = ({ coins, loading, search, favorites, toggleFavorite }) => {
       {loading ? (
         <div className="normaaltekst text-center p-40">
           Loading assets...
+        </div>
+      ) : error ? (
+        // Als er een fout is opgetreden (bijv. API limiet), laten we dat hier zien
+        <div className="normaaltekst text-center p-40" style={{ color: 'var(--negative)' }}>
+          ⚠️ {error}
         </div>
       ) : (
         <>
