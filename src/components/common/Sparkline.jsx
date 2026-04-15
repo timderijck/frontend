@@ -35,7 +35,7 @@ const Sparkline = ({ data, color, width = 120, height = 40, showTooltip = false 
   return (
     <div 
       className="sparkline-container flex align-center" 
-      style={{ width: '100%', height: '100%' }}
+      style={{ width: typeof width === 'number' ? `${width}px` : width, height: typeof height === 'number' ? `${height}px` : height, maxWidth: '100%' }}
       onMouseMove={handleMouseMove} 
       onMouseLeave={() => setHoverData(null)}
     >
