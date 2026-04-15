@@ -1,25 +1,33 @@
 import { useState, useRef } from 'react';
 
+// De Sparkline component tekent een klein grafiekje zonder assen.
 const Sparkline = ({ data, color, width = 120, height = 40, showTooltip = false }) => {
+  // Hier houden we bij waar de muis is voor het tekstwolkje met de prijs
   const [hoverData, setHoverData] = useState(null);
   const svgRef = useRef(null);
 
+  // Als er geen gegevens zijn, tekenen we niks
   if (!data?.length) return null;
 
-  // Use last 48 points by default if it's a small sparkline, or all if specified
+  // We pakken de laatste 48 punten om het grafiekje niet te druk te maken
   const sparkData = data.length > 50 && width < 200 ? data.slice(-48) : data; 
+  
+  // We zoeken de laagste en hoogste prijs om te weten hoe hoog de grafiek moet zijn
   const min = Math.min(...sparkData);
   const max = Math.max(...sparkData);
-  const range = (max - min) || 1;
+  const range = (max - min) || 1; // Het verschil tussen hoog en laag
 
+  // Hier rekenen we voor elk punt uit waar het precies op het scherm moet komen
   const points = sparkData.map((val, i) => ({
-    x: (i / (sparkData.length - 1)) * width,
-    y: height - ((val - min) / range) * height,
+    x: (i / (sparkData.length - 1)) * width, // De plek van links naar rechts
+    y: height - ((val - min) / range) * height, // De plek van boven naar beneden
     val
   }));
 
+  // We maken een lange lijst met coördinaten voor de lijn van de grafiek
   const polylinePoints = points.map(p => `${p.x},${p.y}`).join(' ');
 
+  // Deze functie rekent uit welk prijspunt het dichtst bij je muis zit
   const handleMouseMove = (e) => {
     if (!showTooltip) return;
     const rect = svgRef.current.getBoundingClientRect();
@@ -47,7 +55,7 @@ const Sparkline = ({ data, color, width = 120, height = 40, showTooltip = false 
         preserveAspectRatio="none"
         className="sparkline-svg"
       >
-        {/* For larger sparklines, we might want a filled area (gradient) */}
+        {/* Als het een groot grafiekje is, tekenen we een gekleurd vlak eronder */}
         {width > 300 && (
            <>
              <defs>
@@ -62,7 +70,10 @@ const Sparkline = ({ data, color, width = 120, height = 40, showTooltip = false 
              />
            </>
         )}
+        {/* De gekleurde lijn van de grafiek zelf */}
         <polyline fill="none" stroke={color} strokeWidth={width > 300 ? "2" : "1.5"} strokeLinecap="round" strokeLinejoin="round" points={polylinePoints} />
+        
+        {/* Als je met de muis over de grafiek gaat, tekenen we een wit lijntje en een stipje */}
         {hoverData && (
           <>
             <line x1={hoverData.x} y1="0" x2={hoverData.x} y2={height} stroke="white" strokeWidth="1" strokeDasharray="2,2" />
@@ -70,6 +81,7 @@ const Sparkline = ({ data, color, width = 120, height = 40, showTooltip = false 
           </>
         )}
       </svg>
+      {/* Het tekstwolkje met de prijs dat verschijnt bij je muis */}
       {hoverData && (
         <div className="tooltip">
           ${hoverData.price}

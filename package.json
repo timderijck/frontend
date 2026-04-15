@@ -9,6 +9,15 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "package_uitleg": {
+    "dotenv": "hiermee kun je geheime api keys uit een .env bestand laden",
+    "express": "dit is een framework om een server te maken",
+    "node-fetch": "hiermee kun je data ophalen van een andere website",
+    "react": "de basis van de website waar alles mee gebouwd is",
+    "react-dom": "zorgt ervoor dat react getoond kan worden in de browser",
+    "react-router-dom": "hiermee kun je tussen verschillende pagina's wisselen",
+    "vite": "zorgt ervoor dat je de website snel kunt opstarten tijdens het bouwen"
+  },
   "dependencies": {
     "dotenv": "^17.3.1",
     "express": "^5.2.1",

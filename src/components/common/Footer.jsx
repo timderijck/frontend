@@ -1,3 +1,4 @@
+// De Footer is de onderkant van de website met wat extra informatie.
 const Footer = () => {
     return (
         <footer style={{
@@ -8,11 +9,9 @@ const Footer = () => {
             textAlign: 'center'
         }}>
             <p className="normaaltekst" style={{ fontSize: '0.8rem', opacity: 0.5, maxWidth: '600px', margin: '0 auto' }}>
-                Crypto Intelligence. Data from CoinGecko. Educational purposes only.
+                Finance Dashboard Tim de Rijck/Data van CoinGecko.
             </p>
-            <p className="normaaltekst" style={{ fontSize: '0.7rem', marginTop: '20px', opacity: 0.3 }}>
-                &copy; 2026 FINANCE DASHBOARD
-            </p>
+            
         </footer>
     )
 }
