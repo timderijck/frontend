@@ -87,18 +87,39 @@ const CoinDetail = () => {
           <div className="stats-grid grid-1-2">
             <Card title="Asset Details">
               <div className="flex-column gap-8">
-                 {Object.entries(md).slice(0, 10).map(([key, value]) => {
-                   if (key === 'id' || typeof value === 'object' || value === null || value === "") return null;
-                   return (
-                     <StatItem 
-                        key={key}
-                        label={key.replace(/_/g, ' ')}
-                        value={value.toString()}
-                        labelClassName="uppercase font-75"
-                        className="break-all"
-                     />
-                   );
-                 })}
+                <StatItem 
+                  label="Total Supply" 
+                  value={md.total_supply ? md.total_supply.toLocaleString() : 'N/A'} 
+                />
+                <StatItem 
+                  label="Max Supply" 
+                  value={md.max_supply ? md.max_supply.toLocaleString() : 'N/A'} 
+                />
+                <StatItem 
+                  label="All Time High" 
+                  value={`$${formatPrice(md.ath.usd)}`} 
+                  className="positive" 
+                />
+                <StatItem 
+                  label="All Time Low" 
+                  value={`$${formatPrice(md.atl.usd)}`} 
+                  className="negative" 
+                />
+                <StatItem 
+                  label="24h Change" 
+                  value={formatPercentage(md.price_change_percentage_24h)} 
+                  className={md.price_change_percentage_24h >= 0 ? 'positive' : 'negative'} 
+                />
+                <StatItem 
+                  label="7d Change" 
+                  value={formatPercentage(md.price_change_percentage_7d)} 
+                  className={md.price_change_percentage_7d >= 0 ? 'positive' : 'negative'} 
+                />
+                <StatItem 
+                  label="30d Change" 
+                  value={formatPercentage(md.price_change_percentage_30d)} 
+                  className={md.price_change_percentage_30d >= 0 ? 'positive' : 'negative'} 
+                />
               </div>
             </Card>
 

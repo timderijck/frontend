@@ -48,6 +48,12 @@ body {
   width: 100%;
 }
 
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
 .dashboard-header {
   margin-bottom: 40px;
   display: flex;
