@@ -23,7 +23,7 @@ const Sparkline = ({ data, color, width = 120, height = 40, showTooltip = false 
   const handleMouseMove = (e) => {
     if (!showTooltip) return;
     const rect = svgRef.current.getBoundingClientRect();
-    const index = Math.max(0, Math.min(sparkData.length - 1, Math.round(((e.clientX - rect.left) / width) * (sparkData.length - 1))));
+    const index = Math.max(0, Math.min(sparkData.length - 1, Math.round(((e.clientX - rect.left) / rect.width) * (sparkData.length - 1))));
     
     setHoverData({
       x: points[index].x,
@@ -33,8 +33,20 @@ const Sparkline = ({ data, color, width = 120, height = 40, showTooltip = false 
   };
 
   return (
-    <div className="sparkline-container flex align-center" onMouseMove={handleMouseMove} onMouseLeave={() => setHoverData(null)}>
-      <svg ref={svgRef} width={width} height={height} className="sparkline-svg">
+    <div 
+      className="sparkline-container flex align-center" 
+      style={{ width: '100%', height: '100%' }}
+      onMouseMove={handleMouseMove} 
+      onMouseLeave={() => setHoverData(null)}
+    >
+      <svg 
+        ref={svgRef} 
+        width="100%" 
+        height="100%" 
+        viewBox={`0 0 ${width} ${height}`} 
+        preserveAspectRatio="none"
+        className="sparkline-svg"
+      >
         {/* For larger sparklines, we might want a filled area (gradient) */}
         {width > 300 && (
            <>
